@@ -19,10 +19,20 @@ const CreateForm = (props: Props) => {
             boxes.push(<TextInput
                 onChangeText={handleChange('items[' + i + ']')}
                 style={{ borderWidth: 1, marginHorizontal: "5%", borderRadius: 5, marginBottom: "2%" }}
-
+                key={i}
             ></TextInput>)
         }
         return boxes
+    }
+
+    const handleSubmit = (values: any) => {
+        console.log(values.length)
+        if (values.length < gridItemAmount) {
+            while (values.length < gridItemAmount) {
+                values.push("");
+            }
+        }
+        console.log("VALUES", values)
     }
 
     return (
@@ -47,8 +57,8 @@ const CreateForm = (props: Props) => {
             </View>
 
             <Formik
-                initialValues={{ items: [] }}
-                onSubmit={(values) => console.log(values)}>
+                initialValues={[]}
+                onSubmit={(values) => handleSubmit(values)}>
 
                 {({ handleChange, handleSubmit, values }) => {
                     return (
