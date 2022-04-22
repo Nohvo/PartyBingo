@@ -2,6 +2,9 @@ import React from 'react'
 import { View, Text, StyleSheet, Button, TextInput, ScrollView } from 'react-native'
 import { RadioButton } from 'react-native-paper'
 import { Formik } from 'formik'
+import { add_grid, GridContainer, Item } from '../features/grid'
+import { useDispatch } from 'react-redux'
+import { getLatestId } from '../store/store'
 
 type Props = {
     screen: string
@@ -9,6 +12,7 @@ type Props = {
 }
 
 const CreateForm = (props: Props) => {
+    const dispatch = useDispatch()
     const [checked, setChecked] = React.useState('3x3');
     const gridItemAmount = checked == "3x3" ? 9 : 16
 
@@ -26,13 +30,19 @@ const CreateForm = (props: Props) => {
     }
 
     const handleSubmit = (values: any) => {
-        console.log(values.length)
+        var newItems:Item[] = [];
         if (values.length < gridItemAmount) {
             while (values.length < gridItemAmount) {
                 values.push("");
             }
         }
-        console.log("VALUES", values)
+        values.map((value) => {
+            newItems.push({text:value, value:false})
+        })
+
+        console.log("GOT LATEST ID", getLatestId());
+        var grid:GridContainer = {id:0, name:"Test0", grid:newItems}
+        dispatch(add_grid(grid))
     }
 
     return (

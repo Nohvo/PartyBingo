@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Button, Text } from 'react-native'
 import { useSelector } from 'react-redux'
-import { GridContainer } from './features/grid'
+import { setInitialState, GridContainer } from './features/grid'
 import gridReducer from './features/grid'
 import { useDispatch } from 'react-redux'
 import { add_grid } from './features/grid'
@@ -10,13 +10,17 @@ import { NavigationContainer, DefaultTheme, StackActions } from '@react-navigati
 import CreateForm from './screens/CreateForm'
 import Home from './screens/Home'
 import BingoGrid from './screens/BingoGrid'
+import { retrieveData } from './store/store'
 
 const Stack = createStackNavigator();
 const Root = () => {
     const [screen, setScreen] = useState<string>("Home")
     const grids = useSelector((state:any) => state.grid.grids)
     const dispatch = useDispatch();
-    console.log(grids)
+    
+    useEffect(() => {        
+        retrieveData().then((result) =>  {dispatch(setInitialState(result))})
+    },[])
     return(
         <NavigationContainer>
             <Stack.Navigator initialRouteName='Home'> 
