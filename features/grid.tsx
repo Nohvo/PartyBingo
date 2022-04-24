@@ -2,14 +2,16 @@ import { createSlice } from '@reduxjs/toolkit'
 import { storeData } from '../store/store'
 
 export type GridContainer = {
-    id:number,
-    name:string,
-    grid:Item[]
+    id: number,
+    name: string,
+    grid: Item[]
 }
 export type Item = {
-    text:string,
-    value:boolean
+    text: string,
+    value: boolean
 }
+
+export const reduxInitialState = { grids: [] }
 
 export const gridSlice = createSlice({
     name: "grids",
@@ -22,16 +24,22 @@ export const gridSlice = createSlice({
             storeData(state);
         },
         setInitialState: (state, action) => {
+            if (action.payload) {
+                action.payload.map(item => {
+                    state.grids.push(item)
+                })
+            }
+        },
+        setClearState: (state) => {
+            state.grids.length = 0;
 
-            action.payload.map(item => {
-                state.grids.push(item)
-            })
-        }}
+        }
+    }
 
-    
+
 });
 
-export const {add_grid, setInitialState} = gridSlice.actions
+export const { add_grid, setInitialState, setClearState } = gridSlice.actions
 
 
 export default gridSlice.reducer;

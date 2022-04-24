@@ -42,6 +42,7 @@ const CreateForm = (props: Props) => {
 
         let latestId = 0;
         await getLatestId().then((result) => latestId = result)
+        if(!latestId) latestId = 0
         var grid:GridContainer = {id:latestId, name:"Test" + latestId, grid:newItems}
         dispatch(add_grid(grid))
     }
