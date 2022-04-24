@@ -23,11 +23,6 @@ export const gridSlice = createSlice({
             state.grids.push(action.payload)
             storeData(state);
         },
-        removeGrid : (state, action) => {
-            console.log("REMOVED", state.grids.splice(state.grids.findIndex((item) => action.payload === item.id), 1))
-            console.log(state.grids)
-            //storeData(state);
-        },
         setInitialState: (state, action) => {
             if (action.payload) {
                 action.payload.map(item => {
@@ -48,7 +43,7 @@ export const gridSlice = createSlice({
 
 });
 
-export const { add_grid, setInitialState, setClearState, removeGrid, setReduxGrid } = gridSlice.actions
+export const { add_grid, setInitialState, setClearState, setReduxGrid } = gridSlice.actions
 
 
 export default gridSlice.reducer;
