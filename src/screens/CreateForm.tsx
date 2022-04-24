@@ -22,7 +22,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
 
         for (let i = 0; i < gridItemAmount; i++) {
             boxes.push(<TextInput
-                onChangeText={handleChange('items[' + i + ']')}
+                onChangeText={handleChange('[' + i + ']')}
                 style={{ borderWidth: 1, marginHorizontal: "5%", borderRadius: 5, marginBottom: "2%" }}
                 key={i}
             ></TextInput>)
@@ -31,6 +31,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
     }
 
     const handleSubmit = async (values: any) => {
+        console.log("VALUES", values)
         var newItems: Item[] = [];
         if (values.length < gridItemAmount) {
             while (values.length < gridItemAmount) {
