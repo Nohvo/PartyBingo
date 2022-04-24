@@ -20,13 +20,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     useEffect(() => {
         props.navigation.setOptions({
             header: () => <>
-                <Picker selectedValue={selectedGrid} onValueChange={(value:GridContainer) => setSelectedGrid(value)}>
-                    {props.route.params.grids.map((grid) => {
-                        return (
-                            <Picker.Item label={grid.name} value={grid} />
-                        )
-                    })}
-                </Picker>
+            
             </>
         }
         )
@@ -47,7 +41,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     }
 
     return (<>
-        <View style={{ flexDirection: "row", height: `${100 / gridSize}%` }}>
+{/*         <View style={{ flexDirection: "row", height: `${100 / gridSize}%` }}>
             <View style={styles.square}><Text>Hello</Text></View>
             <View style={styles.square}><Text>Hello</Text></View>
             <View style={styles.square}><Text>Hello</Text></View>
@@ -61,7 +55,16 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
             <View style={styles.square}><Text>Hello</Text></View>
             <View style={styles.square}><Text>Hello</Text></View>
             <View style={styles.square}><Text>Hello</Text></View>
-        </View>
+        </View> */}
+        {/*@ts-ignore*/}
+        <Picker selectedValue={selectedGrid} onValueChange={(value:GridContainer) => setSelectedGrid(value)} >
+                    {props.route.params.grids.map((grid) => {
+                        return (
+                            <Picker.Item label={grid.name} value={grid} />
+                        )
+                    })}
+                </Picker>
+        <Text>{selectedGrid.name}</Text>
     </>)
 }
 
