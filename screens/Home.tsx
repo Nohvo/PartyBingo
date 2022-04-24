@@ -3,6 +3,7 @@ import React from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import { ScreenProps } from 'react-native-screens'
 import { useSelector } from 'react-redux'
+import { clearData } from '../store/store'
 
 type Props = {
     
@@ -17,6 +18,7 @@ const Home = (props: Props & StackScreenProps<any>) => {
 
             <Button title={"Create new"} onPress={() => props.navigation.navigate("CreateForm")}></Button>
             <Button title={"Play"} onPress={() => props.navigation.navigate("BingoGrid", grids[0].grid)}></Button>
+            <Button title={"Clear grids"} onPress={clearData}></Button>
         </View>
     )
 }

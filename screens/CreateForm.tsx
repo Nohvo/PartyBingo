@@ -29,7 +29,7 @@ const CreateForm = (props: Props) => {
         return boxes
     }
 
-    const handleSubmit = (values: any) => {
+    const handleSubmit = async (values: any) => {
         var newItems:Item[] = [];
         if (values.length < gridItemAmount) {
             while (values.length < gridItemAmount) {
@@ -40,8 +40,9 @@ const CreateForm = (props: Props) => {
             newItems.push({text:value, value:false})
         })
 
-        console.log("GOT LATEST ID", getLatestId());
-        var grid:GridContainer = {id:0, name:"Test0", grid:newItems}
+        let latestId = 0;
+        await getLatestId().then((result) => latestId = result)
+        var grid:GridContainer = {id:latestId, name:"Test" + latestId, grid:newItems}
         dispatch(add_grid(grid))
     }
 

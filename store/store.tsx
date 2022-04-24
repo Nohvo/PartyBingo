@@ -12,16 +12,26 @@ export const storeData = async (state:any) => {
     }
   };
 
+  export const clearData = async (state:any) => {
+    try {
+      await AsyncStorage.setItem(
+        '@Grids',
+        ""
+      );
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   export const retrieveData = async () =>  {
     try {
       const value = await AsyncStorage.getItem('@Grids');
       if (value !== null) {
-        // We have data!!
         var data:GridContainer
         return JSON.parse(value).grids;
       }
     } catch (error) {
-      // Error retrieving data
+
     }
   };
 
@@ -31,10 +41,14 @@ export const storeData = async (state:any) => {
       if (value !== null) {
        let items = JSON.parse(value);
        console.log("IDITEMS",items)
-       let latest = Math.max(...items.grids.id)
+       let latest = 0;
+       items.grids.map((grid) => grid.id > latest ? latest = grid.id : null)
        console.log("LATEST", latest);
+       return latest+1
       }
     } catch (error) {
       // Error retrieving data
+      console.log("ID ERROR", error)
+      return 0
     }
   }
