@@ -1,4 +1,5 @@
 import React from 'react'
+import { StackScreenProps } from '@react-navigation/stack'
 import { View, Text, StyleSheet, Button, TextInput, ScrollView } from 'react-native'
 import { RadioButton } from 'react-native-paper'
 import { Formik } from 'formik'
@@ -10,8 +11,7 @@ type Props = {
     screen: string
     setScreen(name: string): any
 }
-
-const CreateForm = (props: Props) => {
+const CreateForm = (props: Props & StackScreenProps<any>) => {
     const dispatch = useDispatch()
     const [checked, setChecked] = React.useState('3x3');
     const gridItemAmount = checked == "3x3" ? 9 : 16
@@ -45,6 +45,8 @@ const CreateForm = (props: Props) => {
         if(!latestId) latestId = 0
         var grid:GridContainer = {id:latestId, name:"Test" + latestId, grid:newItems}
         dispatch(add_grid(grid))
+        // TODO import these string values from constant object
+        props.navigation.navigate("Home");
     }
 
     return (
