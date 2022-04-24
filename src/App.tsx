@@ -1,9 +1,9 @@
 import React from 'react';
-import gridReducer from './src/features/grid'
+import gridReducer from './features/grid'
 
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import Root from './src/Root';
+import Root from './Root';
 
 const store = configureStore({
   reducer: {
