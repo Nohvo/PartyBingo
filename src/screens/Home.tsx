@@ -21,11 +21,10 @@ const Home = (props: Props & StackScreenProps<any>) => {
             <Button title={"Create new"} onPress={() => props.navigation.navigate("CreateForm")}></Button>
             <Button title={"Play"} disabled={grids.length <= 0} onPress={() => props.navigation.navigate("BingoGrid", grids[0].grid)}></Button>
             <Button title={"Clear grids"} onPress={() => {clearData(); dispatch(setClearState())}}></Button>
+            <Button title={"My grids"} onPress={() => {props.navigation.navigate("MyGrids", {grids: grids})}}></Button>
         </View>
     )
 }
-
-
 const styles = StyleSheet.create({
     text: {
         color:"#000",
