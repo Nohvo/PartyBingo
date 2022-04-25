@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { GridContainer } from '../features/grid'
@@ -12,28 +12,21 @@ type Props = {
 }
 
 const BingoGrid = (props: Props & StackScreenProps<any>) => {
-    const items = props.route.params.grids[0]
+    const [items, setItems] = useState(props.route.params.grids);
     const [selectedGrid, setSelectedGrid] = React.useState<GridContainer>(props.route.params.grids[0])
+    const [updateValue, setUpdateValue] = useState<number>(0)
+    const [currentIndex, setCurrentIndex] = useState<number>(0)
 
-    // For example a grid of 9 will lead to 3x3 grid
-    const gridSize = Math.ceil(Math.sqrt(items.grid.length))
-    console.log("GRID SIZE", gridSize)
-    useEffect(() => {
-        props.navigation.setOptions({
-            header: () => <>
-
-            </>
-        }
-        )
-    })
-
+    const forceUpdate = () => {
+        setUpdateValue(updateValue + 1)
+    }
 
     const renderGrid = () => {
         var boxes: any = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
             boxes.push(
-                <View style={{ flexDirection: "column", flex: 1, height: "100%" }}>
-                    <View style={{ flexDirection: "row", height: "100%" }}>
+                <View style={{ flexDirection: "column", flex: 1, height: "100%" }} key={i}>
+                    <View style={{ flexDirection: "row", height: "100%" }} key={selectedGrid.toString()}>
                         {renderRow(i)}
                     </View>
                 </View>
@@ -45,25 +38,34 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         var boxes = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
             boxes.push(
-                <View style={styles.box} onTouchEnd={() => {
+                <View key={i} style={styles.box} onTouchEnd={() => {
                     // ALL HAIL THE LORD LODASH, CLONER OF DEEP
                     var temp = _.cloneDeep(selectedGrid)
                     temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
-                    setSelectedGrid(temp)
+                    console.log("ITEMS", items)
+                    var tempItems = _.cloneDeep(items)
+                    tempItems.find((grid) => grid.id === temp.id).grid = temp.grid;
+                    setItems(tempItems)
+                    setSelectedGrid(temp);
                 }}>
-                    <Text style={styles.boxText}>{selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text}</Text>
+                    <Text style={styles.boxText}>
+                        {selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text : ""}
+                    </Text>
                 </View>)
         }
         return boxes;
     }
 
+    console.log(items)
+
     return (<>
 
-        {/*@ts-ignore*/}
-        <Picker selectedValue={selectedGrid} onValueChange={(value: GridContainer) => setSelectedGrid(value)} >
-            {props.route.params.grids.map((grid) => {
+        <Picker selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
+            setSelectedGrid(items.find((item) => { return item.id === value })); setCurrentIndex(value)
+        }} >
+            {items.map((grid) => {
                 return (
-                    <Picker.Item label={grid.name} value={grid.id} />
+                    <Picker.Item label={grid.name} value={grid.id} key={grid.toString()} />
                 )
             })}
         </Picker>
