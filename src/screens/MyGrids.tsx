@@ -4,9 +4,12 @@ import { GridContainer, setReduxGrid } from '../features/grid'
 import { StackScreenProps } from '@react-navigation/stack'
 import { DataTable } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
+import Clipboard from '@react-native-community/clipboard'
 
 const MyGrids = (props: StackScreenProps<any>) => {
-    console.log("MYGRIDS", props.route.params)
+    const verySecretKey = "Party On"
+    var CryptoJS = require("crypto-js");
+    const [copied, setCopied] = useState<boolean>(false);
     const [grids, setGrids] = useState<GridContainer[]>(props.route.params.grids)
     const dispatch = useDispatch();
 
@@ -19,7 +22,19 @@ const MyGrids = (props: StackScreenProps<any>) => {
         dispatch(setReduxGrid(temp))
     }
 
+    const encryptString = (text:string) => {
+        var ciphertext = CryptoJS.AES.encrypt(text, verySecretKey);
+        return ciphertext.toString()
+    }
+
+
+    const encryptToClipboard = (text:string) => {
+        Clipboard.setString(encryptString(text))
+        setCopied(true)
+    }
+
     return (
+        <>
         <DataTable>
             <DataTable.Header>
                 <DataTable.Title>
@@ -33,15 +48,21 @@ const MyGrids = (props: StackScreenProps<any>) => {
             {grids.map((grid, index) => (
                 //@ts-ignore
                 <DataTable.Row key={index}>
-                    <DataTable.Cell>
+                    <DataTable.Cell style={{flex:2}}>
                         <Text>{grid.name}</Text>
                     </DataTable.Cell>
                     <DataTable.Cell>
                         <Button title={"Remove"} onPress={() => { console.log(handleRemove(grid.id)) } }></Button>
                     </DataTable.Cell>
+                    <DataTable.Cell>
+                        <Button title={"Export"} onPress={() => { encryptToClipboard(JSON.stringify(grid)) } }></Button>
+                    </DataTable.Cell>
                 </DataTable.Row>
             ))}
         </DataTable>
+        {copied ? <Text style={{textAlign:"center"}}>Copied to clipboard! Paste it to your friends in chat!</Text> : <></>}
+        </>
+        
     )
 }
 

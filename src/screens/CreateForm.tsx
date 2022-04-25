@@ -74,7 +74,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                     <Text style={{ textAlignVertical: "center" }}>4x4</Text>
                 </View>
             </View>
-            <View style={{flexDirection:"row", marginLeft:"2%", textAlignVertical:"center" }}>
+            <View style={{flexDirection:"row", marginLeft:"2%" }}>
                 <Text style={{textAlignVertical:"center"}}>Grid name</Text>
                 <TextInput style={{ borderWidth: 1, marginHorizontal: "5%", borderRadius: 5, marginBottom: "2%", width:"75%" }} value={name} onChangeText={(value) => setName(value)}></TextInput>
             </View>
@@ -90,7 +90,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                     return (
                         <>
                             {renderInputs(handleChange)}
-                            <Button title={"Submit"} onPress={handleSubmit}></Button>
+                            <Button title={"Submit"} onPress={() => handleSubmit()}></Button>
                         </>
                     )
                 }}

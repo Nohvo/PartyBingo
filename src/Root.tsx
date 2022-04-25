@@ -12,6 +12,7 @@ import Home from './screens/Home'
 import BingoGrid from './screens/BingoGrid'
 import { retrieveData } from './store/store'
 import MyGrids from './screens/MyGrids'
+import ImportGrid from './screens/ImportGrid'
 
 const Stack = createStackNavigator();
 const Root = () => {
@@ -29,6 +30,7 @@ const Root = () => {
                 <Stack.Screen name="BingoGrid" component={BingoGrid} />
                 <Stack.Screen name="CreateForm" component={CreateForm} />
                 <Stack.Screen name = "MyGrids" component={MyGrids} />
+                <Stack.Screen name = "ImportGrid" component={ImportGrid} />
             </Stack.Navigator>
         </NavigationContainer>
 
