@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { GridContainer } from '../features/grid'
 import { Picker } from '@react-native-picker/picker'
 import { ScrollView } from 'react-native-gesture-handler'
+import _ from 'lodash'
 
 type Props = {
     grids: GridContainer[]
@@ -12,10 +13,8 @@ type Props = {
 
 const BingoGrid = (props: Props & StackScreenProps<any>) => {
     const items = props.route.params.grids[0]
-    const [visible, setVisible] = React.useState(true);
     const [selectedGrid, setSelectedGrid] = React.useState<GridContainer>(props.route.params.grids[0])
-    const openMenu = () => setVisible(true);
-    const closeMenu = () => setVisible(false);
+
     // For example a grid of 9 will lead to 3x3 grid
     const gridSize = Math.ceil(Math.sqrt(items.grid.length))
     console.log("GRID SIZE", gridSize)
@@ -33,8 +32,8 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         var boxes: any = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
             boxes.push(
-                <View style={{ flexDirection: "column", flex: 1 }}>
-                    <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "column", flex: 1, height: "100%" }}>
+                    <View style={{ flexDirection: "row", height: "100%" }}>
                         {renderRow(i)}
                     </View>
                 </View>
@@ -45,9 +44,15 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     const renderRow = (index) => {
         var boxes = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
-           boxes.push( <View style={{ flex: 1 }}>
-                <Text>{selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text}</Text>
-            </View>)
+            boxes.push(
+                <View style={styles.box} onTouchEnd={() => {
+                    // ALL HAIL THE LORD LODASH, CLONER OF DEEP
+                    var temp = _.cloneDeep(selectedGrid)
+                    temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
+                    setSelectedGrid(temp)
+                }}>
+                    <Text style={styles.boxText}>{selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text}</Text>
+                </View>)
         }
         return boxes;
     }
@@ -58,7 +63,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         <Picker selectedValue={selectedGrid} onValueChange={(value: GridContainer) => setSelectedGrid(value)} >
             {props.route.params.grids.map((grid) => {
                 return (
-                    <Picker.Item label={grid.name} value={grid} />
+                    <Picker.Item label={grid.name} value={grid.id} />
                 )
             })}
         </Picker>
@@ -72,8 +77,24 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#000",
         height: "auto",
-        width: "auto"
+        width: "auto",
+    },
+    boxText: {
+        color: "#000",
+        textAlign: "center",
+        textAlignVertical: "center",
+        height: "100%",
+    },
+    box:
+    {
+        flex: 1,
+        height: "100%",
+        flexGrow: 1,
+        justifyContent: "center",
+        alignContent: "center",
+        borderWidth: 1
     }
+
 })
 
 export default BingoGrid
