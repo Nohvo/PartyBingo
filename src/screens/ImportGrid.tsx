@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { add_grid } from '../features/grid';
 import { getLatestId } from '../store/store';
+import base64 from 'react-native-base64'
 
 const ImportGrid = () => {
     const [importString, setImportString] = useState<string>()
@@ -25,9 +26,7 @@ const ImportGrid = () => {
         }
     }
     const decryptString = (text: string) => {
-        var bytes = CryptoJS.AES.decrypt(text, verySecretKey);
-        var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        return plaintext
+        return base64.decode(text)
     }
     return (
         <View style={{ marginHorizontal: "2%" }}>

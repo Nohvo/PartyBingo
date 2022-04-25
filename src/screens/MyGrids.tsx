@@ -4,11 +4,10 @@ import { GridContainer, setReduxGrid } from '../features/grid'
 import { StackScreenProps } from '@react-navigation/stack'
 import { DataTable } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
+import base64 from 'react-native-base64'
 import Clipboard from '@react-native-community/clipboard'
 
 const MyGrids = (props: StackScreenProps<any>) => {
-    const verySecretKey = "Party On"
-    var CryptoJS = require("crypto-js");
     const [copied, setCopied] = useState<boolean>(false);
     const [grids, setGrids] = useState<GridContainer[]>(props.route.params.grids)
     const dispatch = useDispatch();
@@ -23,8 +22,7 @@ const MyGrids = (props: StackScreenProps<any>) => {
     }
 
     const encryptString = (text:string) => {
-        var ciphertext = CryptoJS.AES.encrypt(text, verySecretKey);
-        return ciphertext.toString()
+        return base64.encode(text)
     }
 
 
