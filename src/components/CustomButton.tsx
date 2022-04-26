@@ -1,19 +1,20 @@
-import React from "react";
-import { TouchableOpacity, View, StyleProp, StyleSheet, Text, GestureResponderEvent } from "react-native";
-import { Colors } from "../style/Colors";
+import React, { useMemo } from "react";
+import { TouchableOpacity, View, StyleProp, StyleSheet, Text, GestureResponderEvent, ViewStyle } from "react-native";
 
 type CustomButtonProps = {
-    style?: StyleProp<View>;
+    style?: StyleProp<ViewStyle>;
     title: string;
     disabled?: boolean;
     onPress?: (event: GestureResponderEvent) => void;
 }
 export const CustomButton = (props: CustomButtonProps) => {
     const combineStyles = (): any => {
-        if (props.style) {
+        if (props.style && props.disabled) {
+            return [styles.buttonWrapper, props.style, { backgroundColor: "#CCC", borderColor: "#DDD"}];
+        } else if (props.style) {
             return [styles.buttonWrapper, props.style];
         } else if (props.disabled) {
-            return [styles.buttonWrapper, { backgroundColor: "#CCCCCC" }]
+            return [styles.buttonWrapper, { backgroundColor: "#CCC", borderColor: "#DDD" }]
         } else {
             return styles.buttonWrapper;
         }
@@ -22,9 +23,12 @@ export const CustomButton = (props: CustomButtonProps) => {
         // hack to remove freezing effect from the button
         setTimeout(() => props.onPress(event), 0.1);
     }
+
+    const memoizedStyles = useMemo(combineStyles, [props.style, props.disabled]);
+
     return (
         <TouchableOpacity activeOpacity={0.1} onPress={onPress} disabled={props.disabled}>
-            <View style={combineStyles()}>
+            <View style={memoizedStyles}>
                 <Text style={styles.text}>{props.title}</Text>
             </View>
         </TouchableOpacity>
@@ -32,16 +36,17 @@ export const CustomButton = (props: CustomButtonProps) => {
 }
 const styles = StyleSheet.create({
     buttonWrapper: {
-        backgroundColor: "#27bce6",
+        backgroundColor: "#4dd8ff",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 3,
-        borderWidth:1,
-        borderRadius:15,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: "#87e4ff"
     },
     text: {
         fontSize: 26,
         marginVertical: 10,
-        color: "#333"
+        color: "#222",
+        fontFamily: "Cairo-Bold"
     }
 });

@@ -11,8 +11,6 @@ import { CustomButton } from '../components/CustomButton';
 const ImportGrid = (props: StackScreenProps<any>) => {
     const [importString, setImportString] = useState<string>()
     const [error, setError] = useState<boolean>(false)
-    const verySecretKey = "Party On"
-    var CryptoJS = require("crypto-js");
     var dispatch = useDispatch();
 
     useEffect(() => {
@@ -24,7 +22,6 @@ const ImportGrid = (props: StackScreenProps<any>) => {
 
     const handleImport = async () => {
         try {
-
             var newGrid = JSON.parse(decryptString(importString))
             let latestId = 0;
             await getLatestId().then((result) => latestId = result)
@@ -41,7 +38,9 @@ const ImportGrid = (props: StackScreenProps<any>) => {
         return base64.decode(text)
     }
     return (
-        <View style={{ paddingHorizontal: "2%", width:"100%", height:"100%", backgroundColor:Colors.BACKGROUND }}>
+        <View style={{ paddingHorizontal: "2%", width:"100%", height:"100%", 
+        backgroundColor:Colors.BACKGROUND 
+        }}>
             <Text>Paste an export code here:</Text>
             <TextInput style={{ borderWidth: 1, marginBottom: "1%" }} onChangeText={(text) => setImportString(text)} value={importString}></TextInput>
             <CustomButton title={"Submit"} onPress={() => handleImport()}></CustomButton>
