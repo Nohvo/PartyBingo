@@ -1,16 +1,24 @@
-import React, { useState } from 'react'
-import { Text, Button } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, Button, View, StyleSheet } from 'react-native'
 import { GridContainer, setReduxGrid } from '../features/grid'
 import { StackScreenProps } from '@react-navigation/stack'
 import { DataTable } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 import base64 from 'react-native-base64'
 import Clipboard from '@react-native-community/clipboard'
+import { Colors } from '../style/Colors'
 
 const MyGrids = (props: StackScreenProps<any>) => {
     const [copied, setCopied] = useState<boolean>(false);
     const [grids, setGrids] = useState<GridContainer[]>(props.route.params.grids)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        props.navigation.setOptions({
+            headerStyle: {backgroundColor:Colors.BACKGROUND},
+            title: "My grids"
+        })
+    })
 
     const handleRemove = (id:number) => {
         var temp = [...grids]
@@ -32,7 +40,7 @@ const MyGrids = (props: StackScreenProps<any>) => {
     }
 
     return (
-        <>
+        <View style={styles.container}>
         <DataTable>
             <DataTable.Header>
                 <DataTable.Title>
@@ -59,9 +67,16 @@ const MyGrids = (props: StackScreenProps<any>) => {
             ))}
         </DataTable>
         {copied ? <Text style={{textAlign:"center"}}>Copied to clipboard! Paste it to your friends in chat!</Text> : <></>}
-        </>
+        </View>
         
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: Colors.BACKGROUND,
+        height:"100%"
+    }
+})
 
 export default MyGrids

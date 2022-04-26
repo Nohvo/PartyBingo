@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, View, StyleProp, StyleSheet, Text, GestureResponderEvent } from "react-native";
+import { Colors } from "../style/Colors";
 
 type CustomButtonProps = {
     style?: StyleProp<View>;
@@ -34,7 +35,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#27bce6",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 3
+        marginBottom: 3,
+        borderWidth:1,
+        borderRadius:15,
     },
     text: {
         fontSize: 26,

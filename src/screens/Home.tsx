@@ -1,8 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import {CustomButton} from "../components/CustomButton";
+import { CustomButton } from "../components/CustomButton";
+import { Colors } from '../style/Colors';
+import _ from "lodash"
 
 type Props = {
 
@@ -10,7 +12,14 @@ type Props = {
 
 const Home = (props: Props & StackScreenProps<any>) => {
     const grids = useSelector((state: any) => state.grid.grids)
-    console.log("GRIDS", grids)
+    useEffect(() => {
+        props.navigation.setOptions({
+            header: () => <></>,
+            headerStyle: { backgroundColor: Colors.BACKGROUND }
+
+        })
+    })
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Welcome to party bingo!</Text>
@@ -27,10 +36,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginHorizontal: "auto",
-        marginVertical: 30
+        backgroundColor: Colors.BACKGROUND,
     },
     buttons: {
-        marginHorizontal: 80
+        marginHorizontal: 80,
     },
     text: {
         color: "#000",

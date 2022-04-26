@@ -6,6 +6,8 @@ import { GridContainer } from '../features/grid'
 import { Picker } from '@react-native-picker/picker'
 import { ScrollView } from 'react-native-gesture-handler'
 import _ from 'lodash'
+import { Colors } from '../style/Colors'
+import { CustomButton } from '../components/CustomButton'
 
 type Props = {
     grids: GridContainer[]
@@ -16,9 +18,23 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     const [selectedGrid, setSelectedGrid] = React.useState<GridContainer>(props.route.params.grids[0])
     const [updateValue, setUpdateValue] = useState<number>(0)
     const [currentIndex, setCurrentIndex] = useState<number>(0)
+    const [showText, setShowText] = useState<boolean>(false)
+
+    useEffect(() => {
+        props.navigation.setOptions({
+            header: () => <></>
+        })
+    })
 
     const forceUpdate = () => {
         setUpdateValue(updateValue + 1)
+    }
+
+    const shuffleGrid = () => {
+        let newGrid = _.cloneDeep(selectedGrid)
+        const shuffled = newGrid.grid.sort(() => Math.random() - 0.5)
+        newGrid.grid = shuffled
+        setSelectedGrid(newGrid)
     }
 
     const renderGrid = () => {
@@ -38,7 +54,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         var boxes = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
             boxes.push(
-                <View key={i} style={styles.box} onTouchEnd={() => {
+                <View key={i} style={[styles.box, { backgroundColor: selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? Colors.OPENED : Colors.UNOPENED }]} onTouchEnd={() => {
                     // ALL HAIL THE LORD LODASH, CLONER OF DEEP
                     var temp = _.cloneDeep(selectedGrid)
                     temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
@@ -49,18 +65,18 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
                     setSelectedGrid(temp);
                 }}>
                     <Text style={styles.boxText}>
-                        {selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text : ""}
+                        {showText || selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text : ""}
                     </Text>
                 </View>)
         }
         return boxes;
     }
 
-    console.log(items)
+    console.log("ITEMS", items)
 
     return (<>
 
-        <Picker selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
+        <Picker style={{ backgroundColor: Colors.BACKGROUND }} selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
             setSelectedGrid(items.find((item) => { return item.id === value })); setCurrentIndex(value)
         }} >
             {items.map((grid) => {
@@ -70,6 +86,14 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
             })}
         </Picker>
         {renderGrid()}
+        <View style={{ flexDirection: "row" }}>
+            <View style={{flex:1}}>
+                <CustomButton title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
+            </View>
+            <View style={{flex:1}}>
+                <CustomButton title={showText ?  "Hide text" : "Reveal text"} onPress={() => setShowText(!showText)}></CustomButton>
+            </View>
+        </View>
     </>)
 }
 
