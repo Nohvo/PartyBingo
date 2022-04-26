@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, Button, View, StyleSheet } from 'react-native'
+import { Text, Button, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { GridContainer, setReduxGrid } from '../features/grid'
 import { StackScreenProps } from '@react-navigation/stack'
 import { DataTable } from 'react-native-paper'
@@ -58,10 +58,10 @@ const MyGrids = (props: StackScreenProps<any>) => {
                         <Text>{grid.name}</Text>
                     </DataTable.Cell>
                     <DataTable.Cell>
-                        <Button title={"Remove"} onPress={() => { console.log(handleRemove(grid.id)) } }></Button>
+                        <TouchableOpacity style={styles.actionButton} onPress={() => { console.log(handleRemove(grid.id))}}><Text style={styles.text}>Remove</Text></TouchableOpacity>
                     </DataTable.Cell>
                     <DataTable.Cell>
-                        <Button title={"Export"} onPress={() => { encryptToClipboard(JSON.stringify(grid)) } }></Button>
+                        <TouchableOpacity style={styles.actionButton} onPress={() => { encryptToClipboard(JSON.stringify(grid)) } }><Text style={styles.text}>Export</Text></TouchableOpacity>
                     </DataTable.Cell>
                 </DataTable.Row>
             ))}
@@ -76,6 +76,15 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.BACKGROUND,
         height:"100%"
+    },
+    actionButton: {
+        borderWidth:1,
+        padding:10,
+        borderRadius:10,
+        backgroundColor: Colors.BUTTON
+    },
+    text: {
+        color:"#000"
     }
 })
 

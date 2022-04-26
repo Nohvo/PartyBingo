@@ -28,7 +28,7 @@ export const CustomButton = (props: CustomButtonProps) => {
 }
 const styles = StyleSheet.create({
     buttonWrapper: {
-        backgroundColor: "#27bce6",
+        backgroundColor: Colors.BUTTON,
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 3,

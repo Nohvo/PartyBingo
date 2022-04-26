@@ -22,12 +22,23 @@ const Home = (props: Props & StackScreenProps<any>) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Welcome to party bingo!</Text>
+            <Text style={styles.text}>Party bingo!</Text>
             <View style={styles.buttons}>
-                <CustomButton title={"Create new"} onPress={() => props.navigation.navigate("CreateForm")} />
-                <CustomButton title={"Play"} disabled={grids.length <= 0} onPress={() => props.navigation.navigate("BingoGrid", { grids: grids })} />
-                <CustomButton title={"My grids"} onPress={() => { props.navigation.navigate("MyGrids", { grids: grids }) }} />
-                <CustomButton title={"Import grid"} onPress={() => { props.navigation.navigate("ImportGrid") }} />
+                <View style={styles.divider}>
+                    <CustomButton title={"Create new"} onPress={() => props.navigation.navigate("CreateForm")} />
+                </View>
+                <View style={styles.divider}>
+                    <CustomButton title={"Play"} disabled={grids.length <= 0} onPress={() => props.navigation.navigate("BingoGrid", { grids: grids })} />
+                </View>
+                <View style={styles.divider}>
+                    <CustomButton title={"My grids"} onPress={() => { props.navigation.navigate("MyGrids", { grids: grids }) }} />
+                </View>
+                <View style={styles.divider}>
+                    <CustomButton title={"Import grid"} onPress={() => { props.navigation.navigate("ImportGrid") }} />
+                </View>
+            </View>
+            <View style={{ flexDirection: "column", marginTop:"60%"}}>
+                    <Text style={{alignSelf:"center"}}>© Niko Ohvo</Text>
             </View>
         </View>
     )
@@ -40,6 +51,9 @@ const styles = StyleSheet.create({
     },
     buttons: {
         marginHorizontal: 80,
+    },
+    divider: {
+        marginBottom: 15
     },
     text: {
         color: "#000",

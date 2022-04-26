@@ -1,5 +1,6 @@
 export const Colors = {
-    BACKGROUND: "#f5c77d",
+    BACKGROUND: "#def2b6",
     UNOPENED: "#3486eb",
-    OPENED: "#29d961"
+    OPENED: "#29d961", 
+    BUTTON: "#c1d49b"
 }
