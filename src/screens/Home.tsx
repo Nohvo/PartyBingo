@@ -4,7 +4,7 @@ import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { CustomButton } from "../components/CustomButton";
 import { ContainerView } from "../components/ContainerView";
-// import { Colors } from '../style/Colors';
+import { Colors } from '../style/Colors';
 import _ from "lodash"
 
 type Props = {
@@ -16,7 +16,7 @@ const Home = (props: Props & StackScreenProps<any>) => {
     useEffect(() => {
         props.navigation.setOptions({
             header: () => <></>,
-            // headerStyle: { backgroundColor: Colors.BACKGROUND }
+            headerStyle: { backgroundColor: Colors.BACKGROUND }
 
         })
     })
