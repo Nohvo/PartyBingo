@@ -17,20 +17,20 @@ import ImportGrid from './screens/ImportGrid'
 const Stack = createStackNavigator();
 const Root = () => {
     const [screen, setScreen] = useState<string>("Home")
-    const grids = useSelector((state:any) => state.grid.grids)
+    const grids = useSelector((state: any) => state.grid.grids)
     const dispatch = useDispatch();
-    
-    useEffect(() => {        
-        retrieveData().then((result) =>  {dispatch(setInitialState(result))})
-    },[])
-    return(
+
+    useEffect(() => {
+        retrieveData().then((result) => { dispatch(setInitialState(result)) })
+    }, [])
+    return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'> 
+            <Stack.Navigator initialRouteName='Home'>
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="BingoGrid" component={BingoGrid} />
                 <Stack.Screen name="CreateForm" component={CreateForm} />
-                <Stack.Screen name = "MyGrids" component={MyGrids} />
-                <Stack.Screen name = "ImportGrid" component={ImportGrid} />
+                <Stack.Screen name="MyGrids" component={MyGrids} />
+                <Stack.Screen name="ImportGrid" component={ImportGrid} />
             </Stack.Navigator>
         </NavigationContainer>
 

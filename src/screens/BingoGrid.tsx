@@ -8,6 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import _ from 'lodash'
 import { Colors } from '../style/Colors'
 import { CustomButton } from '../components/CustomButton'
+import {ContainerView} from '../components/ContainerView'
 
 type Props = {
     grids: GridContainer[]
@@ -54,16 +55,23 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         var boxes = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
             boxes.push(
-                <View key={i} style={[styles.box, { backgroundColor: selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? Colors.OPENED : Colors.UNOPENED }]} onTouchEnd={() => {
-                    // ALL HAIL THE LORD LODASH, CLONER OF DEEP
-                    var temp = _.cloneDeep(selectedGrid)
-                    temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
-                    console.log("ITEMS", items)
-                    var tempItems = _.cloneDeep(items)
-                    tempItems.find((grid) => grid.id === temp.id).grid = temp.grid;
-                    setItems(tempItems)
-                    setSelectedGrid(temp);
-                }}>
+                <View
+                    key={i}
+                    style={[
+                        styles.box,
+                        {
+                            backgroundColor: selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? Colors.OPENED : Colors.UNOPENED
+                        }]}
+                    onTouchEnd={() => {
+                        // ALL HAIL THE LORD LODASH, CLONER OF DEEP
+                        var temp = _.cloneDeep(selectedGrid)
+                        temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
+                        console.log("ITEMS", items)
+                        var tempItems = _.cloneDeep(items)
+                        tempItems.find((grid) => grid.id === temp.id).grid = temp.grid;
+                        setItems(tempItems)
+                        setSelectedGrid(temp);
+                    }}>
                     <Text style={styles.boxText}>
                         {showText || selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text : ""}
                     </Text>
@@ -74,30 +82,35 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
 
     console.log("ITEMS", items)
 
-    return (<>
-
-        <Picker style={{ backgroundColor: Colors.BACKGROUND }} selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
-            setSelectedGrid(items.find((item) => { return item.id === value })); setCurrentIndex(value)
-        }} >
-            {items.map((grid) => {
-                return (
-                    <Picker.Item label={grid.name} value={grid.id} key={grid.toString()} />
-                )
-            })}
-        </Picker>
-        {renderGrid()}
-        <View style={{ flexDirection: "row" }}>
-            <View style={{flex:1}}>
-                <CustomButton title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
+    return (
+        <ContainerView style={styles.container}>
+            <Picker style={{
+                backgroundColor: Colors.BACKGROUND
+            }} selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
+                setSelectedGrid(items.find((item) => { return item.id === value })); setCurrentIndex(value)
+            }} >
+                {items.map((grid) => {
+                    return (
+                        <Picker.Item label={grid.name} value={grid.id} key={grid.toString()} />
+                    )
+                })}
+            </Picker>
+            {renderGrid()}
+            <View style={{ flexDirection: "row" }}>
+                <View style={{ flex: 1 }}>
+                    <CustomButton title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <CustomButton title={showText ? "Hide text" : "Reveal text"} onPress={() => setShowText(!showText)}></CustomButton>
+                </View>
             </View>
-            <View style={{flex:1}}>
-                <CustomButton title={showText ?  "Hide text" : "Reveal text"} onPress={() => setShowText(!showText)}></CustomButton>
-            </View>
-        </View>
-    </>)
+        </ContainerView>)
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     square: {
         flex: 1,
         borderWidth: 1,
@@ -110,6 +123,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         textAlignVertical: "center",
         height: "100%",
+        fontFamily: "Cairo-SemiBold",
+        fontSize: 16,
+        lineHeight: 24
     },
     box:
     {
