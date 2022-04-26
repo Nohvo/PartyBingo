@@ -17,8 +17,12 @@ export const CustomButton = (props: CustomButtonProps) => {
             return styles.buttonWrapper;
         }
     }
+    const onPress = (event: GestureResponderEvent) => {
+        // hack to remove freezing effect from the button
+        setTimeout(() => props.onPress(event), 0.1);
+    }
     return (
-        <TouchableOpacity onPress={props.onPress} disabled={props.disabled}>
+        <TouchableOpacity activeOpacity={0.1} onPress={onPress} disabled={props.disabled}>
             <View style={combineStyles()}>
                 <Text style={styles.text}>{props.title}</Text>
             </View>
