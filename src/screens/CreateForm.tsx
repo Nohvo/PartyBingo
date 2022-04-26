@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { getLatestId } from '../store/store'
 import { Colors } from '../style/Colors'
 import { CustomButton } from '../components/CustomButton'
+import { ContainerView } from '../components/ContainerView'
 
 type Props = {
     screen: string
@@ -21,6 +22,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
 
     useEffect(() => {
         props.navigation.setOptions({
+            header: () => {return <></>},
             headerStyle: {backgroundColor:Colors.BACKGROUND},
             title: "Create new"
         })
@@ -61,8 +63,10 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
     }
 
     return (
+        <ContainerView>
         <ScrollView contentContainerStyle={styles.contentContainer}>
             {/* Grid size container */}
+                    <Text style={{ marginLeft: "1%", textAlignVertical: "center", textAlign:"center", fontSize:30, color:"#000" }}>Create new grid</Text>
             <View style={{ flexDirection: "row", marginLeft:"2%" }}>
                 <View style={{ flexDirection: "row" }}>
                     <Text style={{ marginLeft: "1%", textAlignVertical: "center" }}>Grid Size:</Text>
@@ -107,6 +111,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
             </Formik>
             {checked === "4x4" ? <></> : null}
         </ScrollView>
+        </ContainerView>
     )
 }
 const styles = StyleSheet.create({

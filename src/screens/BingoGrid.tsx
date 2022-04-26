@@ -98,7 +98,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
             {renderGrid()}
             <View style={{ flexDirection: "row", backgroundColor: "#FFF" }}>
                 <View style={{ flex: 1 }}>
-                    <CustomButton style={[styles.button, { borderRightWidth: 1, borderColor: Colors.BACKGROUND }]} title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
+                    <CustomButton style={[styles.button, { borderRightWidth: 1, borderColor: "#000" }]} title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
                 </View>
                 <View style={{ flex: 1 }}>
                     <CustomButton style={styles.button} title={showText ? "Hide text" : "Reveal text"} onPress={() => setShowText(!showText)}></CustomButton>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignContent: "center",
         borderWidth: 1,
-        borderColor: Colors.BACKGROUND
+        borderColor: "#000"
     }
 
 })

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import base64 from 'react-native-base64'
 import Clipboard from '@react-native-community/clipboard'
 import { Colors } from '../style/Colors'
+import { ContainerView } from '../components/ContainerView'
 
 const MyGrids = (props: StackScreenProps<any>) => {
     const [copied, setCopied] = useState<boolean>(false);
@@ -15,10 +16,7 @@ const MyGrids = (props: StackScreenProps<any>) => {
 
     useEffect(() => {
         props.navigation.setOptions({
-            headerStyle: {
-                backgroundColor: Colors.BACKGROUND
-            },
-            title: "My grids"
+            header: () => { return <></> }
         })
     })
 
@@ -42,7 +40,9 @@ const MyGrids = (props: StackScreenProps<any>) => {
     }
 
     return (
-        <View style={styles.container}>
+        <ContainerView style={styles.container}>
+            <Text style={{ marginLeft: "1%", textAlignVertical: "center", textAlign: "center", fontSize: 30, color: "#000" }}>My grids</Text>
+
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title>
@@ -69,7 +69,7 @@ const MyGrids = (props: StackScreenProps<any>) => {
                 ))}
             </DataTable>
             {copied ? <Text style={{ textAlign: "center" }}>Copied to clipboard! Paste it to your friends in chat!</Text> : <></>}
-        </View>
+        </ContainerView>
 
     )
 }
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
         height: "100%"
     },
     actionButton: {
-        borderWidth:1,
-        padding:10,
-        borderRadius:10,
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 10,
         backgroundColor: Colors.BUTTON
     },
     text: {
-        color:"#000"
+        color: "#000"
     }
 })
 
