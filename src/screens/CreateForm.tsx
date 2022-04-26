@@ -63,7 +63,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
     }
 
     return (
-        <ContainerView>
+        <ContainerView style={{height:"100%", width:"100%"}}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
             {/* Grid size container */}
                     <Text style={{ marginLeft: "1%", textAlignVertical: "center", textAlign:"center", fontSize:30, color:"#000" }}>Create new grid</Text>
@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     contentContainer: {
-        backgroundColor: Colors.BACKGROUND
+        backgroundColor: Colors.BACKGROUND,
+        height:"100%"
     }
 })
 export default CreateForm;

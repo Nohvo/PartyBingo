@@ -85,7 +85,8 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     return (
         <ContainerView style={styles.container}>
             <Picker style={{
-                backgroundColor: Colors.BACKGROUND
+                backgroundColor: Colors.BACKGROUND,
+                opacity:0.7
             }} selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
                 setSelectedGrid(items.find((item) => { return item.id === value })); setCurrentIndex(value)
             }} >

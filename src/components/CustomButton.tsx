@@ -39,9 +39,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#5ea6ff",
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1,
+        borderWidth: 0.8,
         borderRadius: 5,
-        borderColor: "rgba(94, 166, 255, 0.7)"
+        borderColor: "#000",
     },
     text: {
         fontSize: 26,

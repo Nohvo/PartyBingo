@@ -60,10 +60,14 @@ const MyGrids = (props: StackScreenProps<any>) => {
                             <Text>{grid.name}</Text>
                         </DataTable.Cell>
                         <DataTable.Cell>
-                            <Button title={"Remove"} onPress={() => { console.log(handleRemove(grid.id)) }}></Button>
+                            <TouchableOpacity  onPress={() => { console.log(handleRemove(grid.id)) }}>
+                                <Text style={styles.actionButton}>Remove</Text>
+                            </TouchableOpacity>
                         </DataTable.Cell>
                         <DataTable.Cell>
-                            <Button title={"Export"} onPress={() => { encryptToClipboard(JSON.stringify(grid)) }}></Button>
+                            <TouchableOpacity onPress={() => { encryptToClipboard(JSON.stringify(grid)) }}>
+                                <Text style={styles.actionButton}>Export</Text>
+                            </TouchableOpacity>
                         </DataTable.Cell>
                     </DataTable.Row>
                 ))}
@@ -82,8 +86,10 @@ const styles = StyleSheet.create({
     actionButton: {
         borderWidth: 1,
         padding: 10,
-        borderRadius: 10,
-        backgroundColor: Colors.BUTTON
+        color:"#000",
+        fontWeight:"bold",
+        borderRadius: 5,
+        backgroundColor: "#5ea6ff"
     },
     text: {
         color: "#000"
