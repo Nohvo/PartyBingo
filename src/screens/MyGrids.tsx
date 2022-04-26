@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, Button, View, StyleSheet } from 'react-native'
+import { Text, Button, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { GridContainer, setReduxGrid } from '../features/grid'
 import { StackScreenProps } from '@react-navigation/stack'
 import { DataTable } from 'react-native-paper'
@@ -78,6 +78,15 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.BACKGROUND,
         height: "100%"
+    },
+    actionButton: {
+        borderWidth:1,
+        padding:10,
+        borderRadius:10,
+        backgroundColor: Colors.BUTTON
+    },
+    text: {
+        color:"#000"
     }
 })
 

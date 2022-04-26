@@ -62,7 +62,6 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
 
     return (
         <ScrollView contentContainerStyle={styles.contentContainer}>
-            <Text style={styles.text}>Welcome to create form!</Text>
             {/* Grid size container */}
             <View style={{ flexDirection: "row", marginLeft:"2%" }}>
                 <View style={{ flexDirection: "row" }}>
