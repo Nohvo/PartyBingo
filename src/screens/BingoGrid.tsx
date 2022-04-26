@@ -6,6 +6,7 @@ import { GridContainer } from '../features/grid'
 import { Picker } from '@react-native-picker/picker'
 import { ScrollView } from 'react-native-gesture-handler'
 import _ from 'lodash'
+import { Colors } from '../style/Colors'
 
 type Props = {
     grids: GridContainer[]
@@ -16,6 +17,12 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     const [selectedGrid, setSelectedGrid] = React.useState<GridContainer>(props.route.params.grids[0])
     const [updateValue, setUpdateValue] = useState<number>(0)
     const [currentIndex, setCurrentIndex] = useState<number>(0)
+
+    useEffect(() => {
+        props.navigation.setOptions({
+            header: () => <></>
+        })
+    })
 
     const forceUpdate = () => {
         setUpdateValue(updateValue + 1)
@@ -38,7 +45,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         var boxes = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
             boxes.push(
-                <View key={i} style={styles.box} onTouchEnd={() => {
+                <View key={i} style={[styles.box, {backgroundColor: selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? Colors.OPENED : Colors.UNOPENED}]} onTouchEnd={() => {
                     // ALL HAIL THE LORD LODASH, CLONER OF DEEP
                     var temp = _.cloneDeep(selectedGrid)
                     temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
@@ -56,11 +63,11 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         return boxes;
     }
 
-    console.log(items)
+    console.log("ITEMS", items)
 
     return (<>
 
-        <Picker selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
+        <Picker style={{backgroundColor:Colors.BACKGROUND}} selectedValue={currentIndex} mode={'dropdown'} onValueChange={(value: number) => {
             setSelectedGrid(items.find((item) => { return item.id === value })); setCurrentIndex(value)
         }} >
             {items.map((grid) => {

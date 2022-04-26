@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import { View, Text, StyleSheet, Button, TextInput, ScrollView } from 'react-native'
 import { RadioButton } from 'react-native-paper'
@@ -6,6 +6,8 @@ import { Formik } from 'formik'
 import { add_grid, GridContainer, Item } from '../features/grid'
 import { useDispatch } from 'react-redux'
 import { getLatestId } from '../store/store'
+import { Colors } from '../style/Colors'
+import { CustomButton } from '../components/CustomButton'
 
 type Props = {
     screen: string
@@ -16,6 +18,13 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
     const [checked, setChecked] = React.useState('3x3');
     const [name, setName] = React.useState<string>("");
     const gridItemAmount = checked == "3x3" ? 9 : 16
+
+    useEffect(() => {
+        props.navigation.setOptions({
+            headerStyle: {backgroundColor:Colors.BACKGROUND},
+            title: "Create new"
+        })
+    })
 
     const renderInputs = (handleChange: any) => {
         var boxes: any = []
@@ -52,7 +61,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
     }
 
     return (
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
             <Text style={styles.text}>Welcome to create form!</Text>
             {/* Grid size container */}
             <View style={{ flexDirection: "row", marginLeft:"2%" }}>
@@ -62,6 +71,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                         value="3x3"
                         status={checked === '3x3' ? 'checked' : 'unchecked'}
                         onPress={() => setChecked('3x3')}
+                        color={"#000"}
                     />
                     <Text style={{ textAlignVertical: "center" }}>3x3</Text>
                 </View>
@@ -70,6 +80,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                         value="4x4"
                         status={checked === '4x4' ? 'checked' : 'unchecked'}
                         onPress={() => setChecked('4x4')}
+                        color={"#000"}
                     />
                     <Text style={{ textAlignVertical: "center" }}>4x4</Text>
                 </View>
@@ -90,7 +101,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                     return (
                         <>
                             {renderInputs(handleChange)}
-                            <Button title={"Submit"} onPress={() => handleSubmit()}></Button>
+                            <CustomButton title={"Submit"} onPress={() => handleSubmit()}></CustomButton>
                         </>
                     )
                 }}
@@ -105,6 +116,9 @@ const styles = StyleSheet.create({
         fontSize: 32,
         justifyContent: "center",
         alignSelf: "center"
+    },
+    contentContainer: {
+        backgroundColor: Colors.BACKGROUND
     }
 })
 export default CreateForm;

@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { add_grid } from '../features/grid';
 import { getLatestId } from '../store/store';
 import base64 from 'react-native-base64'
+import { Colors } from '../style/Colors';
+import { StackScreenProps } from '@react-navigation/stack';
+import { CustomButton } from '../components/CustomButton';
 
-const ImportGrid = () => {
+const ImportGrid = (props: StackScreenProps<any>) => {
     const [importString, setImportString] = useState<string>()
     const verySecretKey = "Party On"
     var CryptoJS = require("crypto-js");
     var dispatch = useDispatch();
+
+    useEffect(() => {
+        props.navigation.setOptions({
+            headerStyle: { backgroundColor: Colors.BACKGROUND },
+            title: "Import a grid"
+        })
+    })
 
     const handleImport = async () => {
         try {
@@ -29,10 +39,10 @@ const ImportGrid = () => {
         return base64.decode(text)
     }
     return (
-        <View style={{ marginHorizontal: "2%" }}>
+        <View style={{ paddingHorizontal: "2%", width:"100%", height:"100%", backgroundColor:Colors.BACKGROUND }}>
             <Text>Paste an export string here:</Text>
             <TextInput style={{ borderWidth: 1, marginBottom: "1%" }} onChangeText={(text) => setImportString(text)} value={importString}></TextInput>
-            <Button title={"Submit"} onPress={() => handleImport()}></Button>
+            <CustomButton title={"Submit"} onPress={() => handleImport()}></CustomButton>
         </View>
     )
 }
