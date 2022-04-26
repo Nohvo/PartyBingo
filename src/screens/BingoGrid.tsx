@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import _ from 'lodash'
 import { Colors } from '../style/Colors'
 import { CustomButton } from '../components/CustomButton'
-import {ContainerView} from '../components/ContainerView'
+import { ContainerView } from '../components/ContainerView'
 
 type Props = {
     grids: GridContainer[]
@@ -91,17 +91,17 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
             }} >
                 {items.map((grid) => {
                     return (
-                        <Picker.Item label={grid.name} value={grid.id} key={grid.toString()} />
+                        <Picker.Item style={{fontSize: 20}} label={grid.name} value={grid.id} key={grid.toString()} />
                     )
                 })}
             </Picker>
             {renderGrid()}
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", backgroundColor: "#FFF" }}>
                 <View style={{ flex: 1 }}>
-                    <CustomButton title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
+                    <CustomButton style={[styles.button, { borderRightWidth: 1, borderColor: Colors.BACKGROUND }]} title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <CustomButton title={showText ? "Hide text" : "Reveal text"} onPress={() => setShowText(!showText)}></CustomButton>
+                    <CustomButton style={styles.button} title={showText ? "Hide text" : "Reveal text"} onPress={() => setShowText(!showText)}></CustomButton>
                 </View>
             </View>
         </ContainerView>)
@@ -109,7 +109,8 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: Colors.BACKGROUND
     },
     square: {
         flex: 1,
@@ -117,6 +118,10 @@ const styles = StyleSheet.create({
         borderColor: "#000",
         height: "auto",
         width: "auto",
+    },
+    button: {
+        borderRadius: 0,
+        borderWidth: 0
     },
     boxText: {
         color: "#000",
@@ -134,7 +139,8 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: "center",
         alignContent: "center",
-        borderWidth: 1
+        borderWidth: 1,
+        borderColor: Colors.BACKGROUND
     }
 
 })
