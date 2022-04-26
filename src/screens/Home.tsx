@@ -4,6 +4,7 @@ import { View, Text, Button, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { CustomButton } from "../components/CustomButton";
 import { Colors } from '../style/Colors';
+import _ from "lodash"
 
 type Props = {
 
@@ -18,6 +19,13 @@ const Home = (props: Props & StackScreenProps<any>) => {
 
         })
     })
+    
+    const randomizeGrid = () => {
+        console.log(grids[1].grid)
+        let newGrid = _.cloneDeep(grids[1])
+        const shuffled = newGrid.grid.sort(() => Math.random() - 0.5)
+        console.log("SHUFFLED", shuffled)
+    }
 
     console.log("GRIDS", grids)
     return (
@@ -28,6 +36,7 @@ const Home = (props: Props & StackScreenProps<any>) => {
                 <CustomButton title={"Play"} disabled={grids.length <= 0} onPress={() => props.navigation.navigate("BingoGrid", { grids: grids })} />
                 <CustomButton title={"My grids"} onPress={() => { props.navigation.navigate("MyGrids", { grids: grids }) }} />
                 <CustomButton title={"Import grid"} onPress={() => { props.navigation.navigate("ImportGrid") }} />
+                <CustomButton title={"Randomize"} onPress={() => { randomizeGrid() }} />
             </View>
         </View>
     )

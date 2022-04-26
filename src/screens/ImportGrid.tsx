@@ -10,6 +10,7 @@ import { CustomButton } from '../components/CustomButton';
 
 const ImportGrid = (props: StackScreenProps<any>) => {
     const [importString, setImportString] = useState<string>()
+    const [error, setError] = useState<boolean>(false)
     const verySecretKey = "Party On"
     var CryptoJS = require("crypto-js");
     var dispatch = useDispatch();
@@ -30,9 +31,10 @@ const ImportGrid = (props: StackScreenProps<any>) => {
             if (!latestId) latestId = 0
             newGrid.id = latestId;
             dispatch(add_grid(newGrid))
+            props.navigation.goBack();
         }
         catch (error) {
-
+            setError(true)
         }
     }
     const decryptString = (text: string) => {
@@ -43,6 +45,7 @@ const ImportGrid = (props: StackScreenProps<any>) => {
             <Text>Paste an export code here:</Text>
             <TextInput style={{ borderWidth: 1, marginBottom: "1%" }} onChangeText={(text) => setImportString(text)} value={importString}></TextInput>
             <CustomButton title={"Submit"} onPress={() => handleImport()}></CustomButton>
+            {error ? <Text>Error importing! Check if the code is correct (nothing extra or missing from the code)</Text> : <></>}
         </View>
     )
 }

@@ -7,6 +7,7 @@ import { Picker } from '@react-native-picker/picker'
 import { ScrollView } from 'react-native-gesture-handler'
 import _ from 'lodash'
 import { Colors } from '../style/Colors'
+import { CustomButton } from '../components/CustomButton'
 
 type Props = {
     grids: GridContainer[]
@@ -26,6 +27,13 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
 
     const forceUpdate = () => {
         setUpdateValue(updateValue + 1)
+    }
+
+    const shuffleGrid = () => {
+        let newGrid = _.cloneDeep(selectedGrid)
+        const shuffled = newGrid.grid.sort(() => Math.random() - 0.5)
+        newGrid.grid = shuffled
+        setSelectedGrid(newGrid)
     }
 
     const renderGrid = () => {
@@ -77,6 +85,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
             })}
         </Picker>
         {renderGrid()}
+        <CustomButton title="Shuffle grid" onPress={() => shuffleGrid()}></CustomButton>
     </>)
 }
 

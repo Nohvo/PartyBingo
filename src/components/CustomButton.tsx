@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, View, StyleProp, StyleSheet, Text, GestureResponderEvent } from "react-native";
+import { Colors } from "../style/Colors";
 
 type CustomButtonProps = {
     style?: StyleProp<View>;
@@ -18,7 +19,7 @@ export const CustomButton = (props: CustomButtonProps) => {
         }
     }
     return (
-        <TouchableOpacity onPress={props.onPress} disabled={props.disabled}>
+        <TouchableOpacity onPress={props.onPress} disabled={props.disabled} style={{backgroundColor:Colors.BACKGROUND}}>
             <View style={combineStyles()}>
                 <Text style={styles.text}>{props.title}</Text>
             </View>
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: 3,
         borderWidth:1,
-        borderRadius:15
+        borderRadius:15,
     },
     text: {
         fontSize: 26,
