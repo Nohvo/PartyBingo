@@ -10,7 +10,7 @@ type CustomButtonProps = {
 export const CustomButton = (props: CustomButtonProps) => {
     const combineStyles = (): any => {
         if (props.style && props.disabled) {
-            return [styles.buttonWrapper, props.style, { backgroundColor: "#CCC", borderColor: "#DDD"}];
+            return [styles.buttonWrapper, props.style, { backgroundColor: "#CCC", borderColor: "#DDD" }];
         } else if (props.style) {
             return [styles.buttonWrapper, props.style];
         } else if (props.disabled) {
@@ -36,12 +36,12 @@ export const CustomButton = (props: CustomButtonProps) => {
 }
 const styles = StyleSheet.create({
     buttonWrapper: {
-        backgroundColor: "#4dd8ff",
+        backgroundColor: "#5ea6ff",
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: "#87e4ff"
+        borderColor: "rgba(94, 166, 255, 0.7)"
     },
     text: {
         fontSize: 26,
