@@ -30,6 +30,7 @@ const Home = (props: Props & StackScreenProps<any>) => {
                     <CustomButton style={styles.button} title={"Play"} disabled={grids.length <= 0} onPress={() => props.navigation.navigate("BingoGrid", { grids: grids })} />
                     <CustomButton style={styles.button} title={"My grids"} onPress={() => { props.navigation.navigate("MyGrids", { grids: grids }) }} />
                     <CustomButton style={styles.button} title={"Import grid"} onPress={() => { props.navigation.navigate("ImportGrid") }} />
+                    <Text style={{alignSelf:"center"}}>© Niko Ohvo</Text>
                 </View>
             </View>
         </ContainerView>
