@@ -40,7 +40,7 @@ const ImportGrid = (props: StackScreenProps<any>) => {
     }
     return (
         <View style={{ paddingHorizontal: "2%", width:"100%", height:"100%", backgroundColor:Colors.BACKGROUND }}>
-            <Text>Paste an export string here:</Text>
+            <Text>Paste an export code here:</Text>
             <TextInput style={{ borderWidth: 1, marginBottom: "1%" }} onChangeText={(text) => setImportString(text)} value={importString}></TextInput>
             <CustomButton title={"Submit"} onPress={() => handleImport()}></CustomButton>
         </View>
