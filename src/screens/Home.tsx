@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 3,
     },
+    divider: {
+        marginBottom: 15
+    },
     text: {
         color: "#000",
         fontSize: 32,

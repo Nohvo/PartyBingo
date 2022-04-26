@@ -26,7 +26,9 @@ export const gridSlice = createSlice({
         setInitialState: (state, action) => {
             if (action.payload) {
                 action.payload.map(item => {
-                    state.grids.push(item)
+                    // Don't push duplicates or items with same id
+                    if (state.grids.find((grid) => { return grid.id === item.id }) === undefined)
+                        state.grids.push(item)
                 })
             }
         },
