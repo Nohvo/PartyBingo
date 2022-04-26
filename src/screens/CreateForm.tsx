@@ -15,9 +15,9 @@ type Props = {
 }
 const CreateForm = (props: Props & StackScreenProps<any>) => {
     const dispatch = useDispatch()
-    const [checked, setChecked] = React.useState('3x3');
+    const [rowLength, setRowLength] = React.useState(3);
     const [name, setName] = React.useState<string>("");
-    const gridItemAmount = checked == "3x3" ? 9 : 16
+    const gridItemAmount = rowLength * rowLength;
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -41,19 +41,22 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
 
     const handleSubmit = async (values: any) => {
         console.log("VALUES", values)
-        var newItems: Item[] = [];
+        var newItems: Array<Item[]> = [];
         if (values.length < gridItemAmount) {
             while (values.length < gridItemAmount) {
                 values.push("");
             }
         }
-        values.map((value) => {
-            newItems.push({ text: value, value: false })
-        })
-
+        for(let row = 0; row < gridItemAmount / rowLength; row++){
+            for(let col = 0; col < gridItemAmount / rowLength; col++) {
+                if(!newItems[row]) newItems[row] = [];
+                newItems[row][col] = { text: values[(row * gridItemAmount / rowLength) + col], value: false }
+            }
+        }
         let latestId = 0;
         await getLatestId().then((result) => latestId = result)
         if (!latestId) latestId = 0
+        // @ts-ignore
         var grid: GridContainer = { id: latestId, name: name, grid: newItems }
         dispatch(add_grid(grid))
         // TODO import these string values from constant object
@@ -68,8 +71,8 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                     <Text style={{ marginLeft: "1%", textAlignVertical: "center" }}>Grid Size:</Text>
                     <RadioButton
                         value="3x3"
-                        status={checked === '3x3' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked('3x3')}
+                        status={rowLength === 3 ? 'checked' : 'unchecked'}
+                        onPress={() => setRowLength(3)}
                         color={"#000"}
                     />
                     <Text style={{ textAlignVertical: "center" }}>3x3</Text>
@@ -77,8 +80,8 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                 <View style={{ flexDirection: "row" }}>
                     <RadioButton
                         value="4x4"
-                        status={checked === '4x4' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked('4x4')}
+                        status={rowLength === 4 ? 'checked' : 'unchecked'}
+                        onPress={() => setRowLength(4)}
                         color={"#000"}
                     />
                     <Text style={{ textAlignVertical: "center" }}>4x4</Text>
@@ -105,7 +108,7 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
                     )
                 }}
             </Formik>
-            {checked === "4x4" ? <></> : null}
+            {rowLength === 4 ? <></> : null}
         </ScrollView>
     )
 }

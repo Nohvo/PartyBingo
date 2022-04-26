@@ -13,6 +13,41 @@ import { ContainerView } from '../components/ContainerView'
 type Props = {
     grids: GridContainer[]
 }
+const testi = [
+    [
+        { text: "testi1", value: false },
+        { text: "testi2", value: false },
+        { text: "testi3", value: false }
+    ],
+    [
+        { text: "testi4", value: false },
+        { text: "testi5", value: false },
+        { text: "testi6", value: false }
+    ],
+    [
+        { text: "testi7", value: false },
+        { text: "testi8", value: false },
+        { text: "testi9", value: false }
+    ],
+];
+
+const GridItem = ({ text, value }) => {
+    const [revealed, setRevealed] = useState(value);
+    return (<View
+        style={[
+            styles.box,
+            {
+                backgroundColor: revealed ? Colors.OPENED : Colors.UNOPENED
+            }]}
+        onTouchEnd={() => {
+            // ALL HAIL THE LORD LODASH, CLONER OF DEEP
+            setRevealed(true);
+        }}>
+        <Text style={styles.boxText}>
+            {revealed && text}
+        </Text>
+    </View>);
+}
 
 const BingoGrid = (props: Props & StackScreenProps<any>) => {
     const [items, setItems] = useState(props.route.params.grids);
@@ -39,48 +74,38 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     }
 
     const renderGrid = () => {
-        var boxes: any = []
-        for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
-            boxes.push(
-                <View style={{ flexDirection: "column", flex: 1, height: "100%" }} key={i}>
-                    <View style={{ flexDirection: "row", height: "100%" }} key={selectedGrid.toString()}>
-                        {renderRow(i)}
-                    </View>
-                </View>
-            )
-        }
-        return boxes
-    }
-    const renderRow = (index) => {
-        var boxes = []
-        for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
-            boxes.push(
-                <View
-                    key={i}
-                    style={[
-                        styles.box,
-                        {
-                            backgroundColor: selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? Colors.OPENED : Colors.UNOPENED
-                        }]}
-                    onTouchEnd={() => {
-                        // ALL HAIL THE LORD LODASH, CLONER OF DEEP
-                        var temp = _.cloneDeep(selectedGrid)
-                        temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
-                        console.log("ITEMS", items)
-                        var tempItems = _.cloneDeep(items)
-                        tempItems.find((grid) => grid.id === temp.id).grid = temp.grid;
-                        setItems(tempItems)
-                        setSelectedGrid(temp);
-                    }}>
-                    <Text style={styles.boxText}>
-                        {showText || selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value ? selectedGrid.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].text : ""}
-                    </Text>
-                </View>)
-        }
-        return boxes;
-    }
+        // @ts-ignore
+        return selectedGrid.grid.map((row, index) => <View style={{ flexDirection: "column", flex: 1, height: "100%" }} key={index}>
+            <View style={{ flexDirection: "row", height: "100%" }} key={selectedGrid.toString()}>
+                {
+                    // @ts-ignore
+                row.map(({ text, value }, colIndex) => <GridItem
+                    key={`row-${index}-col-${colIndex}`}
+                    text={text}
+                    value={value} />)}
+            </View>
+        </View>)
 
-    console.log("ITEMS", items)
+    }
+    // const renderRow = (index) => {
+    //     var boxes = []
+    //     for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
+    //         boxes.push(
+    //             <GridItem
+    //                 key={`row-${index}-col-${i}`}
+    //                 rowIndex={index}
+    //                 colIndex={i}
+    //                 selectedGrid={selectedGrid}
+    //                 items={items}
+    //                 setItems={setItems}
+    //                 setSelectedGrid={setSelectedGrid}
+    //                 showText={showText} />)
+    //     }
+    //     return boxes;
+    //     return selectedGrid.grid.map((item) => {
+
+    //     });
+    // }
 
     return (
         <ContainerView style={styles.container}>
@@ -91,7 +116,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
             }} >
                 {items.map((grid) => {
                     return (
-                        <Picker.Item style={{fontSize: 20}} label={grid.name} value={grid.id} key={grid.toString()} />
+                        <Picker.Item style={{ fontSize: 20 }} label={grid.name} value={grid.id} key={grid.toString()} />
                     )
                 })}
             </Picker>
