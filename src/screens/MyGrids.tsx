@@ -60,7 +60,7 @@ const MyGrids = (props: StackScreenProps<any>) => {
                             <Text>{grid.name}</Text>
                         </DataTable.Cell>
                         <DataTable.Cell>
-                            <TouchableOpacity  onPress={() => { console.log(handleRemove(grid.id)) }}>
+                            <TouchableOpacity  onPress={() => { handleRemove(grid.id) }}>
                                 <Text style={styles.actionButton}>Remove</Text>
                             </TouchableOpacity>
                         </DataTable.Cell>

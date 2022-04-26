@@ -42,7 +42,6 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
     }
 
     const handleSubmit = async (values: any) => {
-        console.log("VALUES", values)
         var newItems: Item[] = [];
         if (values.length < gridItemAmount) {
             while (values.length < gridItemAmount) {

@@ -42,16 +42,13 @@ export const getLatestId = async () => {
     const value = await AsyncStorage.getItem('@Grids');
     if (value !== null) {
       let items = JSON.parse(value);
-      console.log("IDITEMS", items)
       let latest = 0;
       items.grids.map((grid) => grid.id > latest ? latest = grid.id : 0)
       if(!latest) latest = 0;
-      console.log("LATEST", latest);
       return latest + 1
     }
   } catch (error) {
     // Error retrieving data
-    console.log("ID ERROR", error)
     return 0
   }
 }

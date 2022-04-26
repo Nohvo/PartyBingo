@@ -37,7 +37,6 @@ export const gridSlice = createSlice({
         },
         setReduxGrid: (state, action) => {
             state.grids = action.payload
-            console.log("PAYLOAD", action.payload)
             storeData(state)
         }
     }

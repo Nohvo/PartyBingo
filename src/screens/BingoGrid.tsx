@@ -66,7 +66,6 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
                         // ALL HAIL THE LORD LODASH, CLONER OF DEEP
                         var temp = _.cloneDeep(selectedGrid)
                         temp.grid[i + (Math.sqrt(selectedGrid.grid.length) * index)].value = true
-                        console.log("ITEMS", items)
                         var tempItems = _.cloneDeep(items)
                         tempItems.find((grid) => grid.id === temp.id).grid = temp.grid;
                         setItems(tempItems)
@@ -79,8 +78,6 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         }
         return boxes;
     }
-
-    console.log("ITEMS", items)
 
     return (
         <ContainerView style={styles.container}>
