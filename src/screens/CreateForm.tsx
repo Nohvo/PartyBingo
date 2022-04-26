@@ -22,8 +22,8 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
 
     useEffect(() => {
         props.navigation.setOptions({
-            header: () => {return <></>},
-            headerStyle: {backgroundColor:Colors.BACKGROUND},
+            header: () => { return <></> },
+            headerStyle: { backgroundColor: Colors.BACKGROUND },
             title: "Create new"
         })
     })
@@ -63,54 +63,54 @@ const CreateForm = (props: Props & StackScreenProps<any>) => {
     }
 
     return (
-        <ContainerView style={{height:"100%", width:"100%"}}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-            {/* Grid size container */}
-                    <Text style={{ marginLeft: "1%", textAlignVertical: "center", textAlign:"center", fontSize:30, color:"#000" }}>Create new grid</Text>
-            <View style={{ flexDirection: "row", marginLeft:"2%" }}>
-                <View style={{ flexDirection: "row" }}>
-                    <Text style={{ marginLeft: "1%", textAlignVertical: "center" }}>Grid Size:</Text>
-                    <RadioButton
-                        value="3x3"
-                        status={checked === '3x3' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked('3x3')}
-                        color={"#000"}
-                    />
-                    <Text style={{ textAlignVertical: "center" }}>3x3</Text>
+        <ContainerView style={{ height: "100%", width: "100%" }}>
+            <ScrollView contentContainerStyle={styles.contentContainer}>
+                {/* Grid size container */}
+                <Text style={{ marginLeft: "1%", textAlignVertical: "center", textAlign: "center", fontSize: 30, color: "#000" }}>Create new grid</Text>
+                <View style={{ flexDirection: "row", marginLeft: "2%" }}>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ marginLeft: "1%", textAlignVertical: "center" }}>Grid Size:</Text>
+                        <RadioButton
+                            value="3x3"
+                            status={checked === '3x3' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('3x3')}
+                            color={"#000"}
+                        />
+                        <Text style={{ textAlignVertical: "center" }}>3x3</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                        <RadioButton
+                            value="4x4"
+                            status={checked === '4x4' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('4x4')}
+                            color={"#000"}
+                        />
+                        <Text style={{ textAlignVertical: "center" }}>4x4</Text>
+                    </View>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                    <RadioButton
-                        value="4x4"
-                        status={checked === '4x4' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked('4x4')}
-                        color={"#000"}
-                    />
-                    <Text style={{ textAlignVertical: "center" }}>4x4</Text>
+                <View style={{ flexDirection: "row", marginLeft: "2%" }}>
+                    <Text style={{ textAlignVertical: "center" }}>Grid name</Text>
+                    <TextInput style={{ borderWidth: 1, marginHorizontal: "5%", borderRadius: 5, marginBottom: "2%", width: "75%" }} value={name} onChangeText={(value) => setName(value)}></TextInput>
                 </View>
-            </View>
-            <View style={{flexDirection:"row", marginLeft:"2%" }}>
-                <Text style={{textAlignVertical:"center"}}>Grid name</Text>
-                <TextInput style={{ borderWidth: 1, marginHorizontal: "5%", borderRadius: 5, marginBottom: "2%", width:"75%" }} value={name} onChangeText={(value) => setName(value)}></TextInput>
-            </View>
-            <View style={{marginLeft:"2%"}}>
-                <Text>Grid items:</Text>
-            </View>
+                <View style={{ marginLeft: "2%" }}>
+                    <Text>Grid items:</Text>
+                </View>
 
-            <Formik
-                initialValues={[]}
-                onSubmit={(values) => handleSubmit(values)}>
+                <Formik
+                    initialValues={[]}
+                    onSubmit={(values) => handleSubmit(values)}>
 
-                {({ handleChange, handleSubmit, values }) => {
-                    return (
-                        <>
-                            {renderInputs(handleChange)}
-                            <CustomButton title={"Submit"} onPress={() => handleSubmit()}></CustomButton>
-                        </>
-                    )
-                }}
-            </Formik>
-            {checked === "4x4" ? <></> : null}
-        </ScrollView>
+                    {({ handleChange, handleSubmit, values }) => {
+                        return (
+                            <>
+                                {renderInputs(handleChange)}
+                                <CustomButton title={"Submit"} onPress={() => handleSubmit()}></CustomButton>
+                            </>
+                        )
+                    }}
+                </Formik>
+                {checked === "4x4" ? <></> : null}
+            </ScrollView>
         </ContainerView>
     )
 }
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         backgroundColor: Colors.BACKGROUND,
-        height:"100%"
+        paddingBottom:"5%"
     }
 })
 export default CreateForm;
