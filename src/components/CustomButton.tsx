@@ -5,7 +5,7 @@ type CustomButtonProps = {
     style?: StyleProp<ViewStyle>;
     title: string;
     disabled?: boolean;
-    onPress?: (event: GestureResponderEvent) => void;
+    onPress: (event: GestureResponderEvent) => void;
 }
 export const CustomButton = (props: CustomButtonProps) => {
     const combineStyles = (): any => {

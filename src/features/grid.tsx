@@ -10,13 +10,13 @@ export type Item = {
     text: string,
     value: boolean
 }
-
-export const reduxInitialState = { grids: [] }
+var emptyGrid:any = []
+export const reduxInitialState = { grids: emptyGrid }
 
 export const gridSlice = createSlice({
     name: "grids",
     initialState: {
-        grids: []
+        grids: emptyGrid
     },
     reducers: {
         add_grid: (state, action) => {

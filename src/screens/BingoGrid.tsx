@@ -15,8 +15,8 @@ type Props = {
 }
 
 const BingoGrid = (props: Props & StackScreenProps<any>) => {
-    const [items, setItems] = useState(props.route.params.grids);
-    const [selectedGrid, setSelectedGrid] = React.useState<GridContainer>(props.route.params.grids[0])
+    const [items, setItems] = useState(props.route.params ? props.route.params.grid : []);
+    const [selectedGrid, setSelectedGrid] = React.useState<GridContainer>(props.route.params ? props.route.params.grids[0] : null)
     const [updateValue, setUpdateValue] = useState<number>(0)
     const [currentIndex, setCurrentIndex] = useState<number>(0)
     const [showText, setShowText] = useState<boolean>(false)
@@ -52,7 +52,7 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
         return boxes
     }
     const renderRow = (index) => {
-        var boxes = []
+        var boxes: any = []
         for (let i = 0; i < Math.sqrt(selectedGrid.grid.length); i++) {
             boxes.push(
                 <View

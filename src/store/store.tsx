@@ -47,6 +47,7 @@ export const getLatestId = async () => {
       if(!latest) latest = 0;
       return latest + 1
     }
+    return 0;
   } catch (error) {
     // Error retrieving data
     return 0

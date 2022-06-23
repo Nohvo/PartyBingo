@@ -10,7 +10,7 @@ import { CustomButton } from '../components/CustomButton';
 import { ContainerView } from '../components/ContainerView';
 
 const ImportGrid = (props: StackScreenProps<any>) => {
-    const [importString, setImportString] = useState<string>()
+    const [importString, setImportString] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
     var dispatch = useDispatch();
 
