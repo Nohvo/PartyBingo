@@ -20,7 +20,6 @@ const BingoGrid = (props: Props & StackScreenProps<any>) => {
     props.route.params ? props.route.params.grids[0] : null,
   );
   let deleteGrid = _.cloneDeep(selectedGrid.grid);
-  console.log(selectedGrid);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [showText, setShowText] = useState<boolean>(false);
   const rowSize = Math.floor(Math.sqrt(selectedGrid.grid.length));
